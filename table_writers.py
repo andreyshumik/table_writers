@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import csv
-
+import openpyxl
 
 CellValue = str | int | float
 
@@ -13,6 +13,32 @@ class TableWriter(ABC):
     @abstractmethod
     def write(self, data: list[list[CellValue]]):
         pass
+
+
+class TableReader(ABC):
+    @abstractmethod
+    def __init__(self, filename: str):
+        pass
+
+    @abstractmethod
+    def read(self, data: list[list[CellValue]]):
+        pass
+
+
+class CSVTableReader(TableReader):
+    def __init__(self, filename: str):
+        self._filename = filename
+
+    def read(self) -> list[list[CellValue]]:
+        r_file = open(self._filename, 'r')
+        file_reader = csv.reader(r_file, delimiter=",")
+        li = []
+        count = 0
+        for row in file_reader:
+            print(row)
+            li.append(row)
+            count += 1
+        return li
 
 
 class CSVTableWriter(TableWriter):
@@ -65,3 +91,6 @@ if __name__ == "__main__":
 
     writer = CSVTableWriter('output.csv')
     writer.write(content)
+
+    reader = CSVTableReader('output.csv')
+    reader.read()
