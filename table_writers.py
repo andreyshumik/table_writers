@@ -113,3 +113,6 @@ if __name__ == "__main__":
 
     reader1 = XLSTableReader('temp.xlsx')
     reader1.read()
+
+
+    # проверка доступа к гитхабу
